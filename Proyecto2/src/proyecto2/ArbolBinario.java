@@ -46,8 +46,7 @@ public class ArbolBinario {
                     add(nuevo, root.getIzHijo());
                 }
 
-            } 
-                else {
+            } else if (nuevo.getData() > root.getData() && !nuevo.getInfo().equals(root.getInfo())){
                 if (root.getDeHijo() == null) {
                     root.setDeHijo(nuevo);
 
@@ -56,10 +55,11 @@ public class ArbolBinario {
                     add(nuevo, root.getDeHijo());
                 }
 
-            }
+            
         }
 
     }
+        }
 
     /**
      * Recorre el arbol de manera inOrder

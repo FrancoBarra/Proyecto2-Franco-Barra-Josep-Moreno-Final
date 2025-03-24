@@ -154,6 +154,7 @@ public class DicotomicKeyGUI extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             questionArea.setText("Error al cargar la clave dicotómica.");
+            JOptionPane.showMessageDialog(this, "El archivo cargado no es valido");
         }
     }
 

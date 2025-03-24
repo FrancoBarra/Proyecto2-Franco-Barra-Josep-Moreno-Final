@@ -13,6 +13,7 @@ public class NodoArbol {
     private String info;
     private NodoArbol izHijo;
     private NodoArbol deHijo;
+ 
 
     public NodoArbol(int data, String info) {
         this.data = data;
@@ -58,6 +59,9 @@ public class NodoArbol {
      public boolean isTieneHijo(){
         return this.deHijo!=null || this.izHijo!=null;
     }
+
+    
+     
      
    
 }

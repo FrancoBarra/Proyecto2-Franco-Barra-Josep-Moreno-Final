@@ -15,13 +15,8 @@ public class Proyecto2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here}
-        HashTable tabla= new HashTable();
-        tabla.insertar("a", "b");
-        tabla.insertar("c", "s");
-        tabla.insertar("d", "f");
-        tabla.insertar("g", "h");
-        
-        System.out.println("d");
+        DicotomicKeyGUI ven= new DicotomicKeyGUI();
+        ven.setVisible(true);
     }
     
 }
