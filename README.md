@@ -1,4 +1,4 @@
-Autores: Franco Barra y Josep Moreno 
+Autores: Franco Barra y Joseph Moreno 
 Debido a un problema en la carga de archivo se necesito hacer un segundo repositorio
 link respositorio inicial: https://github.com/FrancoBarra/Proyecto2-Franco-Barra-Josep-Moreno
 link repositorio con la version final https://github.com/FrancoBarra/Proyecto2-Franco-Barra-Josep-Moreno-Final
