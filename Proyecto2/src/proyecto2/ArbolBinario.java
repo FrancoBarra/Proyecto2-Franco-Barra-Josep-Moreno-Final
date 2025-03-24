@@ -38,7 +38,7 @@ public class ArbolBinario {
             this.raiz = nuevo;
         } else {
 
-            if (nuevo.getData() < root.getData()) {
+            if (nuevo.getData() < root.getData() && ! nuevo.getInfo().equals(root.getInfo())) { //// linea con el cod prueba &&
                 if (root.getIzHijo() == null) {
                     root.setIzHijo(nuevo);
 
@@ -62,7 +62,7 @@ public class ArbolBinario {
     }
 
     /**
-     * Calcula el tiempo  de la operación buscar inorder
+     * Recorre el arbol de manera inOrder
      * @param i indice que se asigna al nodo
      * @param nodo nodo a buscar
      * @return nodo encontrado
@@ -75,12 +75,7 @@ public class ArbolBinario {
         System.out.println("Tiempo de busqueda inOrder: " + duration + " nanosegundos");
         return resultado; //,duration;   asi quedaria
     }
-    /**
-     * Recorre el arbol de manera inOrder y es llamado dentro de buscarInorder para calcular el tiempo de la operación
-     * @param i indice que se asigna al nodo
-     * @param nodo nodo a buscar
-     * @return nodo encontrado
-     */
+
     private NodoArbol buscarInorderRecursivo(int i, NodoArbol nodo) {
         if (nodo != null) {
             NodoArbol resultadoIzquierdo = buscarInorderRecursivo(i, nodo.getIzHijo());

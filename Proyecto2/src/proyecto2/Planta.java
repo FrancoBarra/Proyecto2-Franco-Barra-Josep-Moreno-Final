@@ -6,7 +6,7 @@ package proyecto2;
 
 /**
  *
- * @author frank
+ * @author joseph.moreno
  */
 public class Planta {
         private String nombrePlanta;
@@ -45,5 +45,4 @@ public class Planta {
     }
         
     }
-
 

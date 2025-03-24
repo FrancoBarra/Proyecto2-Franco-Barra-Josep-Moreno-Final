@@ -81,11 +81,15 @@ public class DicotomicKeyGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombrePlanta = searchField.getText();
+                long startTime = System.nanoTime(); // Captura el tiempo de inicio
                 String informacion = tabla.buscar(nombrePlanta);
+                long endTime = System.nanoTime(); // Captura el tiempo de finalización
+                long duration = (endTime - startTime); // Calcula la duración
+
                 if (informacion != null) {
-                    questionArea.setText("Información de la planta: " + informacion);
+                    questionArea.setText("Información de la planta: " + informacion + "\nDuración de la búsqueda: " + duration + " nanosegundos");
                 } else {
-                    questionArea.setText("Planta no encontrada.");
+                    questionArea.setText("Planta no encontrada.\nDuración de la búsqueda: " + duration + " nanosegundos");
                 }
             }
         });
@@ -96,7 +100,6 @@ public class DicotomicKeyGUI extends JFrame {
                 String nombrePlanta = searchField.getText();
                 String resultado = buscarEnArbol(nombrePlanta);
                 questionArea.setText(resultado);
-                
             }
         });
 
@@ -138,9 +141,8 @@ public class DicotomicKeyGUI extends JFrame {
                     tabla.insertar(nombreEspecie, preguntaTexto);
 
                     // Insertar en el árbol binario
-                    // Aca parece ser el error
-                    NodoArbol nuevo=new NodoArbol(nombreEspecie.hashCode(),nombreEspecie);
-                    arbol.add(nuevo,arbol.getRaiz());
+                    NodoArbol nuevo = new NodoArbol(nombreEspecie.hashCode(), nombreEspecie);
+                    arbol.add(nuevo, arbol.getRaiz());
 
                     // Mostrar la información en el área de texto
                     questionArea.append("Especie: " + nombreEspecie + "\n");
@@ -156,12 +158,20 @@ public class DicotomicKeyGUI extends JFrame {
     }
 
     private String buscarEnArbol(String nombrePlanta) {
-        NodoArbol nodo = arbol.buscarInorder(nombrePlanta.hashCode(),arbol.getRaiz());
+        long startTime = System.nanoTime();
+        NodoArbol nodo = arbol.buscarInorder(nombrePlanta.hashCode(), arbol.getRaiz());
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+
+        String resultado;
         if (nodo != null) {
-            return "Planta encontrada: " + nombrePlanta;
+            resultado = "Planta encontrada: " + nombrePlanta;
         } else {
-            return "Planta no encontrada en el árbol.";
+            resultado = "Planta no encontrada en el árbol.";
         }
+
+        resultado += "\nDuración de la búsqueda: " + duration + " nanosegundos";
+        return resultado;
     }
 
     private void mostrarGrafo() {
@@ -173,17 +183,21 @@ public class DicotomicKeyGUI extends JFrame {
     }
 
     private void construirGrafo(NodoArbol nodo, Graph graph, String parentId) {
-        if (nodo == null) return;
+    if (nodo == null) return;
 
-        String nodeId = Integer.toString(nodo.getData()) ;
-        graph.addNode(nodeId).setAttribute("ui.label", nodeId);
+    // Generar un ID único para el nodo usando el nombre de la planta
+    String nodeId = nodo.getInfo() + "_" + nodo.getData(); // Combina nombre y hash
+    graph.addNode(nodeId).setAttribute("ui.label", nodeId);
 
-        if (parentId != null) {
-            graph.addEdge(parentId + "-" + nodeId, parentId, nodeId);
-        }
+    if (parentId != null) {
+        // Generar un ID único para la arista
+        String edgeId = parentId + "-" + nodeId;
+        graph.addEdge(edgeId, parentId, nodeId);
+    }
 
-        construirGrafo(nodo.getIzHijo(), graph, nodeId);
-        construirGrafo(nodo.getDeHijo(), graph, nodeId);
+    // Recursivamente construir el grafo para los hijos
+    construirGrafo(nodo.getIzHijo(), graph, nodeId);
+    construirGrafo(nodo.getDeHijo(), graph, nodeId);
     }
 
     public static void main(String[] args) {

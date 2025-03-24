@@ -6,16 +6,14 @@ package proyecto2;
 
 /**
  *
- * @author frank
+ * @author joseph.moreno
  */
-
 public class NodoArbol {
     private int data;
     private String info;
     private NodoArbol izHijo;
     private NodoArbol deHijo;
-    
-    
+
     public NodoArbol(int data, String info) {
         this.data = data;
         this.info=info;
@@ -56,13 +54,10 @@ public class NodoArbol {
         this.info = info;
     }
     
-    /**
-     * Comprueba si el nodo tiene al menos un hijo
-     * @return boolean
-     */
+
      public boolean isTieneHijo(){
         return this.deHijo!=null || this.izHijo!=null;
     }
-    
+     
    
 }
