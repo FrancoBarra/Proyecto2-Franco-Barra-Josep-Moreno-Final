@@ -6,10 +6,9 @@ package proyecto2;
 
 /**
  *
- * @author frank
+ * @author joseph.moreno
  */
 public class ArbolBinario {
-
     private NodoArbol raiz;
 
     public ArbolBinario() {
@@ -20,93 +19,12 @@ public class ArbolBinario {
         return raiz;
     }
 
-    public void setRaiz(NodoArbol raiz) {
-        this.raiz = raiz;
+    public void add(int data, NodoArbol root) {
+        // Implementación de la inserción en el árbol
     }
 
-    public boolean isEmpty() {
-        return raiz == null;
-    }
-    /**
-     * Se agrega un nuevo nodo al arbol binario
-     * @param nuevo nodo al agregar
-     * @param root punto de partida
-     */
-     public void add(NodoArbol nuevo, NodoArbol root) {
-       
-        if (isEmpty()) {
-            this.raiz = nuevo;
-        } else {
-
-            if (nuevo.getData() < root.getData() && ! nuevo.getInfo().equals(root.getInfo())) { //// linea con el cod prueba &&
-                if (root.getIzHijo() == null) {
-                    root.setIzHijo(nuevo);
-
-                } else {
-                    add(nuevo, root.getIzHijo());
-                }
-
-            } else if (nuevo.getData() > root.getData() && !nuevo.getInfo().equals(root.getInfo())){
-                if (root.getDeHijo() == null) {
-                    root.setDeHijo(nuevo);
-
-
-                } else {
-                    add(nuevo, root.getDeHijo());
-                }
-
-            
-        }
-
-    }
-        }
-
-    /**
-     * Recorre el arbol de manera inOrder
-     * @param i indice que se asigna al nodo
-     * @param nodo nodo a buscar
-     * @return nodo encontrado
-     */
     public NodoArbol buscarInorder(int i, NodoArbol nodo) {
-        long startTime = System.nanoTime();
-        NodoArbol resultado = buscarInorderRecursivo(i, nodo);
-        long endTime = System.nanoTime(); 
-        long duration = (endTime - startTime);  //esta es la duracion, si quieres puedes retornarla
-        System.out.println("Tiempo de busqueda inOrder: " + duration + " nanosegundos");
-        return resultado; //,duration;   asi quedaria
-    }
-
-    private NodoArbol buscarInorderRecursivo(int i, NodoArbol nodo) {
-        if (nodo != null) {
-            NodoArbol resultadoIzquierdo = buscarInorderRecursivo(i, nodo.getIzHijo());
-            if (resultadoIzquierdo != null) {
-                return resultadoIzquierdo;
-            }
-
-            if (nodo.getData() == i) {
-                return nodo;
-            }
-
-            return buscarInorderRecursivo(i, nodo.getDeHijo());
-        }
+        // Implementación de la búsqueda en el árbol
         return null;
-    }
-    /**
-     * Busca la planta a traves de preguntas
-     * @param respuesta respuesta de la pregunta
-     * @param nodo nodo actual
-     * @return nodo que contiene el nombre de la planta
-     */
-    public NodoArbol buscarPlanta(boolean respuesta, NodoArbol nodo) {
-        
-            if (respuesta) {
-                nodo = nodo.getIzHijo();
-            } else {
-                nodo = nodo.getDeHijo();
-            }
-        if (!nodo.isTieneHijo()){
-            return nodo;
-        } 
-            return null;
     }
 }

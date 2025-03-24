@@ -9,32 +9,23 @@ package proyecto2;
  * @author joseph.moreno
  */
 public class Planta {
-        private String nombrePlanta;
-        private String value;
-        private Planta pNext; 
+    private String nombrePlanta;
+    private String value;
+    private Planta pNext;
 
-        public Planta(String nombrePlanta, String informacion) {
-            this.nombrePlanta = nombrePlanta;
-            this.value = informacion;
-            this.pNext = null;
-        }
+    public Planta(String nombrePlanta, String informacion) {
+        this.nombrePlanta = nombrePlanta;
+        this.value = informacion;
+        this.pNext = null;
+    }
 
     public String getNombrePlanta() {
         return nombrePlanta;
     }
 
-    public void setNombrePlanta(String nombrePlanta) {
-        this.nombrePlanta = nombrePlanta;
-    }
-
     public String getValue() {
         return value;
     }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-    
 
     public Planta getpNext() {
         return pNext;
@@ -43,6 +34,4 @@ public class Planta {
     public void setpNext(Planta siguiente) {
         this.pNext = siguiente;
     }
-        
-    }
-
+}

@@ -10,25 +10,17 @@ package proyecto2;
  */
 public class NodoArbol {
     private int data;
-    private String info;
     private NodoArbol izHijo;
     private NodoArbol deHijo;
- 
 
-    public NodoArbol(int data, String info) {
+    public NodoArbol(int data) {
         this.data = data;
-        this.info=info;
         this.izHijo = null;
         this.deHijo = null;
     }
 
-    // Getters y setters
     public int getData() {
         return data;
-    }
-
-    public void setData(int data) {
-        this.data = data;
     }
 
     public NodoArbol getIzHijo() {
@@ -46,22 +38,4 @@ public class NodoArbol {
     public void setDeHijo(NodoArbol deHijo) {
         this.deHijo = deHijo;
     }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-    
-
-     public boolean isTieneHijo(){
-        return this.deHijo!=null || this.izHijo!=null;
-    }
-
-    
-     
-     
-   
 }

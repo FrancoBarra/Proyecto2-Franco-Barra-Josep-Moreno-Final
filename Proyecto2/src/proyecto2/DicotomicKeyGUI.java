@@ -81,15 +81,11 @@ public class DicotomicKeyGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombrePlanta = searchField.getText();
-                long startTime = System.nanoTime(); // Captura el tiempo de inicio
                 String informacion = tabla.buscar(nombrePlanta);
-                long endTime = System.nanoTime(); // Captura el tiempo de finalización
-                long duration = (endTime - startTime); // Calcula la duración
-
                 if (informacion != null) {
-                    questionArea.setText("Información de la planta: " + informacion + "\nDuración de la búsqueda: " + duration + " nanosegundos");
+                    questionArea.setText("Información de la planta: " + informacion);
                 } else {
-                    questionArea.setText("Planta no encontrada.\nDuración de la búsqueda: " + duration + " nanosegundos");
+                    questionArea.setText("Planta no encontrada.");
                 }
             }
         });
@@ -141,8 +137,7 @@ public class DicotomicKeyGUI extends JFrame {
                     tabla.insertar(nombreEspecie, preguntaTexto);
 
                     // Insertar en el árbol binario
-                    NodoArbol nuevo = new NodoArbol(nombreEspecie.hashCode(), nombreEspecie);
-                    arbol.add(nuevo, arbol.getRaiz());
+                    arbol.add(nombreEspecie.hashCode(), arbol.getRaiz());
 
                     // Mostrar la información en el área de texto
                     questionArea.append("Especie: " + nombreEspecie + "\n");
@@ -154,51 +149,55 @@ public class DicotomicKeyGUI extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             questionArea.setText("Error al cargar la clave dicotómica.");
-            JOptionPane.showMessageDialog(this, "El archivo cargado no es valido");
         }
     }
 
     private String buscarEnArbol(String nombrePlanta) {
-        long startTime = System.nanoTime();
         NodoArbol nodo = arbol.buscarInorder(nombrePlanta.hashCode(), arbol.getRaiz());
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-
-        String resultado;
         if (nodo != null) {
-            resultado = "Planta encontrada: " + nombrePlanta;
+            return "Planta encontrada: " + nombrePlanta;
         } else {
-            resultado = "Planta no encontrada en el árbol.";
+            return "Planta no encontrada en el árbol.";
         }
-
-        resultado += "\nDuración de la búsqueda: " + duration + " nanosegundos";
-        return resultado;
     }
 
     private void mostrarGrafo() {
         Graph graph = new SingleGraph("Árbol Binario");
-        construirGrafo(arbol.getRaiz(), graph, null);
+        construirGrafo(arbol.getRaiz(), graph, null); // Llamada inicial para construir el grafo
+
+        // Mostrar el grafo en una ventana
         Viewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        viewer.enableAutoLayout();
-        viewer.addDefaultView(true);
+        viewer.enableAutoLayout(); // Habilitar el diseño automático
+        viewer.addDefaultView(true); // Mostrar la vista por defecto
     }
 
     private void construirGrafo(NodoArbol nodo, Graph graph, String parentId) {
-    if (nodo == null) return;
+        if (nodo == null) {
+            return; // Caso base: si el nodo es nulo, termina la recursión
+        }
 
-    // Generar un ID único para el nodo usando el nombre de la planta
-    String nodeId = nodo.getInfo() + "_" + nodo.getData(); // Combina nombre y hash
-    graph.addNode(nodeId).setAttribute("ui.label", nodeId);
+        // Crear un ID único para el nodo
+        String nodeId = "nodo_" + nodo.getData(); // Usar un prefijo para evitar colisiones
 
-    if (parentId != null) {
-        // Generar un ID único para la arista
-        String edgeId = parentId + "-" + nodeId;
-        graph.addEdge(edgeId, parentId, nodeId);
-    }
+        // Verificar si el nodo ya existe en el grafo
+        if (graph.getNode(nodeId) == null) {
+            // Agregar el nodo al grafo si no existe
+            graph.addNode(nodeId).setAttribute("ui.label", nodo.getData());
+        }
 
-    // Recursivamente construir el grafo para los hijos
-    construirGrafo(nodo.getIzHijo(), graph, nodeId);
-    construirGrafo(nodo.getDeHijo(), graph, nodeId);
+        // Si hay un nodo padre, agregar una arista entre el padre y el nodo actual
+        if (parentId != null) {
+            String edgeId = parentId + "-" + nodeId; // Crear un ID único para la arista
+            if (graph.getEdge(edgeId) == null) {
+                graph.addEdge(edgeId, parentId, nodeId); // Agregar la arista si no existe
+            }
+        }
+
+        // Recorrer el subárbol izquierdo
+        construirGrafo(nodo.getIzHijo(), graph, nodeId);
+
+        // Recorrer el subárbol derecho
+        construirGrafo(nodo.getDeHijo(), graph, nodeId);
     }
 
     public static void main(String[] args) {
